@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* Design tokens (Tailwind 4: dulu di tailwind.config.ts) */
+@theme {
+  --color-herbal: #1f3d2b;
+  --color-daun: #3f7d4e;
+  --color-kunyit: #e8a317;
+  --color-rosella: #b83a3a;
+  --color-telang: #4b5fb0;
+  --color-krem: #fbf6ec;
+  --color-jahe: #f3e6cf;
+  --color-wa: #25d366;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+
+  --radius-blob: 42% 58% 55% 45% / 48% 42% 58% 52%;
+
+  --shadow-lembut: 0 18px 40px -18px rgba(31, 61, 43, 0.35);
+
+  --animate-naik-pelan: naik-pelan 0.7s ease-out both;
+  --animate-melayang: melayang 6s ease-in-out infinite;
+  --animate-denyut: denyut 2.4s ease-out infinite;
+
+  @keyframes naik-pelan {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes melayang {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes denyut {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+    }
+    70% {
+      box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-krem font-sans text-base text-herbal antialiased;
+    /* Tekstur grain kertas yang sangat halus di atas latar krem */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.24 0 0 0 0 0.17 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Fokus keyboard selalu terlihat */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-telang;
+  }
+
+  ::selection {
+    @apply bg-kunyit text-herbal;
+  }
+}
+
+@utility wadah {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
