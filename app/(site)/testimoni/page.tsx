@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Info, MessageCircleHeart } from "lucide-react";
+import { MessageCircleHeart } from "lucide-react";
 import { KepalaHalaman, JudulSection } from "@/components/ui/Judul";
 import { Muncul } from "@/components/ui/Muncul";
 import { KartuTestimoni } from "@/components/testimoni/KartuTestimoni";
@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 export default async function HalamanTestimoni() {
   const [testimoni, produk] = await Promise.all([getTestimoni(), getProduk()]);
   const daftar = testimoni;
-  const adaContoh = daftar.some((t) => t.contoh);
 
   return (
     <>
@@ -26,14 +25,6 @@ export default async function HalamanTestimoni() {
       />
 
       <section aria-label="Daftar testimoni" className="wadah py-12">
-        {adaContoh && (
-          <p className="mb-6 flex gap-2 rounded-2xl bg-jahe/70 p-4 text-sm text-herbal/85">
-            <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            Testimoni bertanda &ldquo;Contoh&rdquo; adalah ilustrasi untuk
-            keperluan desain dan akan diganti ulasan pelanggan asli.
-          </p>
-        )}
-
         {daftar.length > 0 ? (
           <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {daftar.map((t, i) => (

@@ -12,7 +12,7 @@ import {
   type KategoriArtikel,
 } from "./berita";
 import { galeri as galeriStatis, kategoriGaleri, type ItemGaleri, type KategoriGaleri } from "./galeri";
-import { testimoni as testimoniStatis, type Testimoni } from "./testimoni";
+import { modePresentasi, testimoni as testimoniStatis, type Testimoni } from "./testimoni";
 
 /**
  * Lapisan data: membaca dari Supabase bila .env.local sudah diisi,
@@ -257,7 +257,7 @@ type BarisTestimoni = {
   created_at: string;
 };
 
-export const getTestimoni = unstable_cache(
+const ambilTestimoni = unstable_cache(
   async (): Promise<Testimoni[]> => {
     const db = supabasePublik();
     if (!db) {
@@ -291,6 +291,12 @@ export const getTestimoni = unstable_cache(
   ["testimoni"],
   { tags: [TAG.testimoni], revalidate: SEGAR },
 );
+
+/** Testimoni contoh hanya ikut tampil dalam mode presentasi (lihat modePresentasi). */
+export async function getTestimoni(): Promise<Testimoni[]> {
+  const semua = await ambilTestimoni();
+  return modePresentasi() ? semua : semua.filter((t) => !t.contoh);
+}
 
 // ---------------------------------------------------------------------------
 // Promo utama (banner hampers)

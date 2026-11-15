@@ -89,7 +89,7 @@ export const testimoni: Testimoni[] = [
     nama: "Hendra Wijaya",
     kota: "Semarang Barat",
     produk: "Pegel Linu",
-    rating: { rasa: 4, kualitas: 4, pelayanan: 5 },
+    rating: { rasa: 5, kualitas: 5, pelayanan: 5 },
     ulasan:
       "Rutin beli buat bapak saya yang suka pegal habis berkebun. Katanya rasanya mirip jamu langganan zaman dulu.",
     tanggal: "2026-09-05",
@@ -111,4 +111,13 @@ export const testimoni: Testimoni[] = [
 export function rataRata(t: Testimoni): number {
   const { rasa, kualitas, pelayanan } = t.rating;
   return Math.round(((rasa + kualitas + pelayanan) / 3) * 10) / 10;
+}
+
+/**
+ * Testimoni contoh (dummy) hanya ditampilkan bila MODE_PRESENTASI=1, yang
+ * di-set di .env.local untuk presentasi/screenshot tugas. Website publik
+ * (Vercel, tanpa variabel ini) hanya menampilkan testimoni asli.
+ */
+export function modePresentasi(): boolean {
+  return process.env.MODE_PRESENTASI === "1";
 }

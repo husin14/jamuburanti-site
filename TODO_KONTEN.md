@@ -40,5 +40,5 @@ disembunyikan atau diberi tanda `[ISI: ...]` sampai datanya ada.
 - [ ] Konfirmasi ukuran kemasan yang tersedia per varian (foto menunjukkan 250 ml, 500 ml, 1 liter).
 
 ## Testimoni
-- [ ] **8 TESTIMONI DI `lib/data/testimoni.ts` ADALAH CONTOH (DUMMY)** atas permintaan pemilik project, untuk keperluan desain/presentasi. Nama dan ulasannya karangan. Di website sudah diberi label "Contoh" + keterangan. **Wajib dihapus atau diganti testimoni asli sebelum website dipublikasikan.**
+- [ ] **8 TESTIMONI DI `lib/data/testimoni.ts` ADALAH CONTOH (DUMMY)** atas permintaan pemilik project, untuk keperluan desain/presentasi. Nama dan ulasannya karangan. Hanya tampil di mode presentasi lokal (`MODE_PRESENTASI=1` di `.env.local`), tidak tampil di website publik Vercel. **Jangan set `MODE_PRESENTASI` di Vercel.** Hapus bila testimoni asli sudah cukup.
 - [ ] Testimoni asli akan masuk lewat form dan disetujui admin (Fase 3).

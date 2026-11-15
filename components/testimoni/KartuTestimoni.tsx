@@ -65,14 +65,6 @@ export function KartuTestimoni({
       <div className="flex items-center gap-2">
         <Bintang nilai={rataRata(t)} />
         <span className="text-sm font-bold">{rataRata(t).toFixed(1)}</span>
-        {t.contoh && (
-          <span
-            className="rounded-full bg-herbal/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-herbal/70"
-            title="Testimoni contoh untuk keperluan desain, bukan ulasan pelanggan asli"
-          >
-            Contoh
-          </span>
-        )}
       </div>
 
       <blockquote className="mt-4 flex-1 text-[17px] leading-relaxed">
