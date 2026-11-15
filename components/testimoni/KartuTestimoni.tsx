@@ -96,11 +96,16 @@ export function KartuTestimoni({
         </span>
         <span>
           <span className="block font-semibold">{t.nama}</span>
-          <span className="block text-sm text-herbal/75">
-            {t.kota} · {t.produk}
-          </span>
+          {keterangan(t) && (
+            <span className="block text-sm text-herbal/75">{keterangan(t)}</span>
+          )}
         </span>
       </figcaption>
     </figure>
   );
+}
+
+/** "Kota · Produk"; pemisah hanya dipakai bila keduanya terisi. */
+function keterangan(t: Testimoni): string {
+  return [t.kota, t.produk].map((x) => x.trim()).filter(Boolean).join(" · ");
 }
