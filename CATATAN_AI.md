@@ -162,6 +162,17 @@ Dibuat dengan bantuan AI:
 | Pesan error login dibuat spesifik (belum dikonfirmasi / kata sandi salah / dibatasi) | Ditemukan saat pemilik pertama kali login dan gagal tanpa petunjuk. |
 | Nomor WhatsApp, alamat, jam buka tetap di kode | Dipakai di banyak komponen; jarang berubah. |
 
+### Logo resmi (15 November 2026)
+Keputusan manusia: memakai logo "Jamu Tradisional Bu Ranti – The Pleasure Of Traditional Drink" (folder `logo jamu`, 2 varian).
+
+| Keputusan AI | Alasan |
+|---|---|
+| Memakai varian latar krem, bukan varian "transparan" | Varian "transparan" ternyata JPEG dengan pola kotak-kotak yang ikut tercetak (bukan transparansi asli), sehingga akan terlihat di website. |
+| Latar putih di luar lingkaran dibuat transparan dengan kunci warna, bukan dipotong bulat | Tagline lebih lebar dari lingkaran; potongan bulat memotong kata "The" dan "Drink". |
+| Navbar: logo bulat + tulisan "Jamu Bu Ranti" | Pada tinggi 48–56 px, teks di dalam logo terlalu kecil dibaca. |
+| Footer: logo besar di atas kartu krem | Tagline cokelat kurang kontras langsung di atas hijau tua. |
+| Ikon tab browser hanya ilustrasi kunyit | Logo lengkap tidak terbaca di ukuran 16–32 px. |
+
 ## Status verifikasi
 - Fase 1 + upgrade paket: `npm run build` dan `npm run lint` lolos tanpa error (14 November 2026).
 - Tampilan Beranda, menu mobile, footer, dan 404 sudah dicek di browser pada 360px, 768px, 1024px, dan desktop; tidak ada scroll horizontal. Animasi hanya terverifikasi lewat CSS, karena komputer pengujian memakai pengaturan "kurangi gerakan".

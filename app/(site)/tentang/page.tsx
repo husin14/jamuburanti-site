@@ -15,7 +15,7 @@ import { KepalaHalaman, JudulSection } from "@/components/ui/Judul";
 import { Muncul } from "@/components/ui/Muncul";
 import { TombolTautan } from "@/components/ui/Tombol";
 import { OrnamenDaun } from "@/components/ui/Ikon";
-import { IkonLumpang } from "@/components/ui/Logo";
+import { LogoGambar } from "@/components/ui/Logo";
 
 export const metadata: Metadata = {
   title: "Tentang Kami",
@@ -92,7 +92,9 @@ export default function Tentang() {
             />
           </div>
           <div className="absolute bottom-0 right-0 flex items-center gap-3 rounded-2xl bg-herbal px-4 py-3 text-krem shadow-lembut">
-            <IkonLumpang className="h-10 w-10 text-krem" />
+            <span className="shrink-0 rounded-full bg-krem p-0.5">
+              <LogoGambar alt="" sizes="48px" className="w-11" />
+            </span>
             <span>
               <span className="block font-display text-xl font-semibold leading-none text-kunyit">
                 3 generasi

@@ -25,7 +25,7 @@ export async function Footer() {
 
       <div className="wadah relative grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4">
-          <Logo terang />
+          <Logo terang besar />
           <p className="font-display text-lg italic text-kunyit">
             &ldquo;{site.tagline}&rdquo;
           </p>

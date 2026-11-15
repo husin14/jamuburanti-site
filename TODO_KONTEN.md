@@ -14,7 +14,8 @@ disembunyikan atau diberi tanda `[ISI: ...]` sampai datanya ada.
 - [ ] Pastikan URL Instagram benar: `https://www.instagram.com/jamuburanti`
 
 ## Aset visual
-- [ ] **Logo asli** Jamu Bu Ranti (PNG/SVG latar transparan) → `public/images/`. Saat ini memakai wordmark teks + ikon lumpang **sementara** (`components/ui/Logo.tsx`).
+- [x] **Logo asli** Jamu Tradisional Bu Ranti terpasang (`public/images/logo/logo-jamu-bu-ranti.png`, PNG transparan) + ikon tab browser (`app/icon.png`, `app/apple-icon.png`).
+- [ ] Opsional: file logo vektor (SVG/AI) dari desainer, agar tajam di semua ukuran & bisa dicetak.
 - [ ] Foto produk **Beras Kencur** (satu-satunya produk terlaris yang belum punya foto sendiri).
 
 ## Produk (dipakai mulai Fase 2)

@@ -15,6 +15,7 @@ import {
   Settings,
 } from "lucide-react";
 import { keluar } from "@/app/admin/actions/auth";
+import { LogoGambar } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils/cn";
 
 const menu = [
@@ -42,8 +43,13 @@ export function NavAdmin({
   return (
     <aside className="sticky top-0 z-30 border-b border-herbal/10 bg-herbal text-krem lg:h-screen lg:w-64 lg:shrink-0 lg:border-b-0">
       <div className="flex items-center justify-between gap-3 px-5 py-4 lg:block">
-        <Link href="/admin" className="font-display text-xl font-semibold">
-          Jamu <span className="text-kunyit">Bu Ranti</span>
+        <Link href="/admin" className="inline-flex items-center gap-2 font-display text-xl font-semibold">
+          <span className="shrink-0 rounded-full bg-krem p-0.5">
+            <LogoGambar alt="" sizes="40px" className="w-9" />
+          </span>
+          <span>
+            Jamu <span className="text-kunyit">Bu Ranti</span>
+          </span>
           <span className="ml-2 rounded-full bg-krem/10 px-2 py-0.5 align-middle font-sans text-xs font-bold text-krem/80">
             Admin
           </span>
