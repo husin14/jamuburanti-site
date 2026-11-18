@@ -15,6 +15,8 @@ export type Testimoni = {
   ulasan: string;
   tanggal: string;
   contoh: boolean;
+  /** URL foto dari pelanggan (sudah disetujui admin). */
+  foto?: string | null;
 };
 
 export const testimoni: Testimoni[] = [

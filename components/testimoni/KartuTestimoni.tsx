@@ -1,6 +1,7 @@
 import { Quote, Star } from "lucide-react";
 import { rataRata, type Testimoni } from "@/lib/data/testimoni";
 import { cn } from "@/lib/utils/cn";
+import { FotoUlasan } from "./FotoUlasan";
 
 const warnaAvatar = ["#E8A317", "#3F7D4E", "#B83A3A", "#4B5FB0", "#C2562E"];
 
@@ -13,13 +14,7 @@ function inisial(nama: string) {
     .toUpperCase();
 }
 
-export function Bintang({
-  nilai,
-  className,
-}: {
-  nilai: number;
-  className?: string;
-}) {
+export function Bintang({ nilai, className }: { nilai: number; className?: string }) {
   return (
     <span
       className={cn("inline-flex gap-0.5", className)}
@@ -32,9 +27,7 @@ export function Bintang({
           aria-hidden="true"
           className={cn(
             "h-4 w-4",
-            i <= Math.round(nilai)
-              ? "fill-kunyit text-kunyit"
-              : "fill-herbal/10 text-herbal/20",
+            i <= Math.round(nilai) ? "fill-kunyit text-kunyit" : "fill-herbal/10 text-herbal/20",
           )}
         />
       ))}
@@ -51,6 +44,10 @@ export function KartuTestimoni({
   indeks?: number;
   className?: string;
 }) {
+  // Testimoni berupa screenshot saja (tanpa teks) dari admin
+  const hanyaFoto = Boolean(t.foto) && !t.ulasan.trim();
+  const nilaiSama = t.rating.rasa === t.rating.kualitas && t.rating.kualitas === t.rating.pelayanan;
+
   return (
     <figure
       className={cn(
@@ -58,33 +55,42 @@ export function KartuTestimoni({
         className,
       )}
     >
-      <Quote
-        className="absolute right-5 top-5 h-8 w-8 text-kunyit/40"
-        aria-hidden="true"
-      />
+      <Quote className="absolute right-5 top-5 h-8 w-8 text-kunyit/40" aria-hidden="true" />
       <div className="flex items-center gap-2">
         <Bintang nilai={rataRata(t)} />
         <span className="text-sm font-bold">{rataRata(t).toFixed(1)}</span>
       </div>
 
-      <blockquote className="mt-4 flex-1 text-[17px] leading-relaxed">
-        &ldquo;{t.ulasan}&rdquo;
-      </blockquote>
+      <div className="mt-4 flex-1">
+        {hanyaFoto ? (
+          <FotoUlasan src={t.foto!} nama={t.nama} potret />
+        ) : (
+          <>
+            <blockquote className="text-[17px] leading-relaxed">
+              &ldquo;{t.ulasan}&rdquo;
+            </blockquote>
+            {t.foto && <FotoUlasan src={t.foto} nama={t.nama} className="mt-4" />}
+          </>
+        )}
+      </div>
 
-      <dl className="mt-4 grid grid-cols-3 gap-2 rounded-xl bg-jahe/60 p-3 text-center text-xs">
-        {(
-          [
-            ["Rasa", t.rating.rasa],
-            ["Kualitas", t.rating.kualitas],
-            ["Pelayanan", t.rating.pelayanan],
-          ] as const
-        ).map(([label, nilai]) => (
-          <div key={label}>
-            <dt className="text-herbal/75">{label}</dt>
-            <dd className="font-bold">{nilai}/5</dd>
-          </div>
-        ))}
-      </dl>
+      {/* Panel per aspek; disembunyikan pada kartu screenshot bila nilainya sama semua */}
+      {!(hanyaFoto && nilaiSama) && (
+        <dl className="mt-4 grid grid-cols-3 gap-2 rounded-xl bg-jahe/60 p-3 text-center text-xs">
+          {(
+            [
+              ["Rasa", t.rating.rasa],
+              ["Kualitas", t.rating.kualitas],
+              ["Pelayanan", t.rating.pelayanan],
+            ] as const
+          ).map(([label, nilai]) => (
+            <div key={label}>
+              <dt className="text-herbal/75">{label}</dt>
+              <dd className="font-bold">{nilai}/5</dd>
+            </div>
+          ))}
+        </dl>
+      )}
 
       <figcaption className="mt-5 flex items-center gap-3">
         <span
@@ -96,9 +102,7 @@ export function KartuTestimoni({
         </span>
         <span>
           <span className="block font-semibold">{t.nama}</span>
-          {keterangan(t) && (
-            <span className="block text-sm text-herbal/75">{keterangan(t)}</span>
-          )}
+          {keterangan(t) && <span className="block text-sm text-herbal/75">{keterangan(t)}</span>}
         </span>
       </figcaption>
     </figure>
@@ -107,5 +111,8 @@ export function KartuTestimoni({
 
 /** "Kota · Produk"; pemisah hanya dipakai bila keduanya terisi. */
 function keterangan(t: Testimoni): string {
-  return [t.kota, t.produk].map((x) => x.trim()).filter(Boolean).join(" · ");
+  return [t.kota, t.produk]
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .join(" · ");
 }

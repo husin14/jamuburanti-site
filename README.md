@@ -30,6 +30,9 @@ npm run lint
    Matikan *Automatically expose new tables*; hak akses sudah diatur di skrip.
 2. Buka **SQL Editor → New query**, tempel seluruh isi `supabase/pasang-sekaligus.sql`, lalu **Run**.
    (Isinya = `supabase/migrations/…_skema_awal.sql` + `supabase/seed.sql`. Cukup dijalankan sekali.)
+   Database yang sudah terpasang sebelum 18 Nov 2026: jalankan juga
+   `supabase/migrations/20261118000000_foto_testimoni.sql` (foto pada testimoni: bucket privat
+   `ulasan-masuk`, foto baru tampil setelah admin menyetujui ulasan).
 3. Opsional untuk presentasi: jalankan `supabase/seed-contoh-testimoni.sql` (testimoni contoh). Testimoni contoh hanya tampil bila `MODE_PRESENTASI=1` di `.env.local`; website publik (Vercel) hanya menampilkan testimoni asli.
    Hapus sebelum go-live: `delete from public.testimonials where is_sample;`
 4. Isi `.env.local`:

@@ -4,28 +4,10 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { ImagePlus, LoaderCircle, X } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/browser";
+import { kompresGambar } from "@/lib/utils/kompres-gambar";
 import { kelasTombol } from "./UI";
 
-const MAKS_SISI = 1600;
-const MAKS_BYTE = 2 * 1024 * 1024;
-
-/** Perkecil & kompres gambar di browser (WebP) sebelum diunggah. */
-async function kompres(file: File): Promise<{ blob: Blob; lebar: number; tinggi: number }> {
-  const bitmap = await createImageBitmap(file);
-  const skala = Math.min(1, MAKS_SISI / Math.max(bitmap.width, bitmap.height));
-  const lebar = Math.round(bitmap.width * skala);
-  const tinggi = Math.round(bitmap.height * skala);
-  const kanvas = document.createElement("canvas");
-  kanvas.width = lebar;
-  kanvas.height = tinggi;
-  kanvas.getContext("2d")!.drawImage(bitmap, 0, 0, lebar, tinggi);
-  bitmap.close();
-  for (const mutu of [0.85, 0.75, 0.6]) {
-    const blob = await new Promise<Blob | null>((r) => kanvas.toBlob(r, "image/webp", mutu));
-    if (blob && blob.size <= MAKS_BYTE) return { blob, lebar, tinggi };
-  }
-  throw new Error("Gambar terlalu besar walau sudah dikompres. Pakai foto lain.");
-}
+const UKURAN = { maksSisi: 1600, maksByte: 2 * 1024 * 1024 };
 
 /**
  * Unggah gambar ke Supabase Storage (bucket public-images) lalu menyimpan URL-nya
@@ -67,13 +49,13 @@ export function UnggahGambar({
     setStatus("proses");
     setPesan("Mengompres & mengunggah…");
     try {
-      const { blob, lebar, tinggi } = await kompres(file);
+      const { blob, lebar, tinggi, ekstensi } = await kompresGambar(file, UKURAN);
       const dasar = file.name.replace(/\.[^.]+$/, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40);
-      const jalur = `${folder}/${Date.now()}-${dasar || "foto"}.webp`;
+      const jalur = `${folder}/${Date.now()}-${dasar || "foto"}.${ekstensi}`;
       const db = supabaseBrowser();
       const { error } = await db.storage
         .from("public-images")
-        .upload(jalur, blob, { contentType: "image/webp", cacheControl: "31536000" });
+        .upload(jalur, blob, { contentType: blob.type, cacheControl: "31536000" });
       if (error) throw new Error(error.message);
       const { data } = db.storage.from("public-images").getPublicUrl(jalur);
       setUrl(data.publicUrl);

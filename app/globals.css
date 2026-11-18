@@ -61,6 +61,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Kunci gulir halaman saat foto diperbesar (<dialog> terbuka) */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
   body {
     @apply bg-krem font-sans text-base text-herbal antialiased;
     /* Tekstur grain kertas yang sangat halus di atas latar krem */

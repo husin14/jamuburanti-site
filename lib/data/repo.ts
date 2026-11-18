@@ -254,6 +254,7 @@ type BarisTestimoni = {
   rating_service: number;
   review: string;
   is_sample: boolean;
+  photo_url: string | null;
   created_at: string;
 };
 
@@ -266,7 +267,7 @@ const ambilTestimoni = unstable_cache(
     const { data, error } = await db
       .from("testimonials")
       .select(
-        "id, name, city, product, rating_taste, rating_quality, rating_service, review, is_sample, created_at",
+        "id, name, city, product, rating_taste, rating_quality, rating_service, review, is_sample, photo_url, created_at",
       )
       .eq("is_approved", true)
       .eq("consent", true)
@@ -286,6 +287,7 @@ const ambilTestimoni = unstable_cache(
       ulasan: r.review,
       tanggal: r.created_at.slice(0, 10),
       contoh: r.is_sample,
+      foto: r.photo_url,
     }));
   },
   ["testimoni"],

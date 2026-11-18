@@ -69,6 +69,30 @@ export function validasiTestimoni(form: FormData): { data?: DataTestimoni; galat
   return { data: { nama, produk, rasa, kualitas, pelayanan, ulasan }, galat };
 }
 
+/** Foto ulasan: diperkecil di browser sebelum dikirim (batas body Server Action 1 MB). */
+export const FOTO_ULASAN = { maksSisi: 1400, maksByte: 900 * 1024 } as const;
+
+/**
+ * Cek file foto dari form ulasan berdasarkan isi (bukan nama/ekstensi):
+ * hanya WebP atau JPEG, maksimal FOTO_ULASAN.maksByte.
+ * null = tidak ada foto; string = pesan galat.
+ */
+export async function periksaFoto(
+  v: FormDataEntryValue | null,
+): Promise<{ isi: Uint8Array; ekstensi: "webp" | "jpg"; tipe: string } | null | string> {
+  if (!(v instanceof Blob) || v.size === 0) return null;
+  if (v.size > FOTO_ULASAN.maksByte) return "Ukuran foto terlalu besar (maks. 900 KB setelah dikompres).";
+  const isi = new Uint8Array(await v.arrayBuffer());
+  const ascii = (a: number, b: number) => String.fromCharCode(...isi.subarray(a, b));
+  if (isi.length > 12 && ascii(0, 4) === "RIFF" && ascii(8, 12) === "WEBP") {
+    return { isi, ekstensi: "webp", tipe: "image/webp" };
+  }
+  if (isi[0] === 0xff && isi[1] === 0xd8 && isi[2] === 0xff) {
+    return { isi, ekstensi: "jpg", tipe: "image/jpeg" };
+  }
+  return "File foto tidak dikenali. Pakai JPG, PNG, atau WebP.";
+}
+
 /** Hasil Server Action untuk useActionState. */
 export type HasilForm = {
   status: "awal" | "sukses" | "galat";

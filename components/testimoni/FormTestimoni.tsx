@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { LoaderCircle, Star } from "lucide-react";
 import { Bidang, Honeypot, PesanSukses, kelasInput } from "@/components/ui/Form";
 import { kirimTestimoni } from "@/app/(site)/actions";
+import { PilihFoto } from "@/components/testimoni/PilihFoto";
 import { validasiTestimoni, type Galat, type HasilForm } from "@/lib/validasi";
 import { cn } from "@/lib/utils/cn";
 
@@ -173,6 +174,8 @@ export function FormTestimoni({ namaProduk }: { namaProduk: string[] }) {
         />
       </Bidang>
 
+      <PilihFoto galat={galat.foto} />
+
       <div>
         <label className="flex items-start gap-3">
           <input
@@ -182,8 +185,8 @@ export function FormTestimoni({ namaProduk }: { namaProduk: string[] }) {
             aria-invalid={Boolean(galat.persetujuan)}
           />
           <span>
-            Saya setuju nama/inisial dan ulasan ini ditampilkan di website Jamu
-            Bu Ranti.
+            Saya setuju nama/inisial, ulasan, dan foto (bila ada) ini
+            ditampilkan di website Jamu Bu Ranti.
           </span>
         </label>
         {galat.persetujuan && (
